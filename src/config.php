@@ -1,8 +1,9 @@
 <?php
-$servername = "ip";
+$servername = "servername";
 $username = "username";
 $password = "password";
 $dbname = "dbname";
+
 
 $Token = "token";
 // Create connection
