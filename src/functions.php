@@ -174,13 +174,14 @@ function cancelledSupporters($total_pages,$page,$Headers,$conn,$profile){
     }
 }
 
-function backupDatabaseAllTables($conn,$dbname ,$tables = '*'){
+function backupDatabaseAllTables($dbhost,$dbusername,$dbpassword,$dbname,$tables = '*'){
+    $db = new mysqli($dbhost, $dbusername, $dbpassword, $dbname); 
 
     if($tables == '*') { 
         $tables = array();
-        $result = $conn->query("SHOW TABLES");
-        while($supporters = $result->fetch_data()) { 
-            $tables[] = $supporters[0];
+        $result = $db->query("SHOW TABLES");
+        while($row = $result->fetch_row()) { 
+            $tables[] = $row[0];
         }
     } else { 
         $tables = is_array($tables)?$tables:explode(',',$tables);
@@ -189,23 +190,23 @@ function backupDatabaseAllTables($conn,$dbname ,$tables = '*'){
     $return = '';
 
     foreach($tables as $table){
-        $result = $conn->query("SELECT * FROM $table");
+        $result = $db->query("SELECT * FROM $table");
         $numColumns = $result->field_count;
 
         /* $return .= "DROP TABLE $table;"; */
-        $result2 = $conn->query("SHOW CREATE TABLE $table");
-        $supporters2 = $result2->fetch_data();
+        $result2 = $db->query("SHOW CREATE TABLE $table");
+        $row2 = $result2->fetch_row();
 
-        $return .= "\n\n".$supporters2[1].";\n\n";
+        $return .= "\n\n".$row2[1].";\n\n";
 
         for($i = 0; $i < $numColumns; $i++) { 
-            while($supporters = $result->fetch_data()) { 
-                $return .= "INSERT IGNORE INTO $table VALUES(";
+            while($row = $result->fetch_row()) { 
+                $return .= "INSERT INTO $table VALUES(";
                 for($j=0; $j < $numColumns; $j++) { 
-                    $supporters[$j] = addslashes($supporters[$j]);
-                    // $supporters[$j] = $supporters[$j];
-                    if (isset($supporters[$j])) { 
-                        $return .= '"'.$supporters[$j].'"' ;
+                    $row[$j] = addslashes($row[$j]);
+                    $row[$j] = $row[$j];
+                    if (isset($row[$j])) { 
+                        $return .= '"'.$row[$j].'"' ;
                     } else { 
                         $return .= '""';
                     }
