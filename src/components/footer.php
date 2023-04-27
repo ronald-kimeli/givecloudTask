@@ -50,6 +50,42 @@
             $('#example').DataTable({
                 scrollX: true,
             });
+            
+            $("#supporters").click(function (e) { 
+                e.preventDefault();
+                $.ajax({
+                    type: "GET",
+                    url: "supporterTable.php",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#example").html(response);
+                    }
+                }); 
+            });
+                     
+            $("#cancelledsupporters").click(function (e) { 
+                e.preventDefault();
+                $.ajax({
+                    type: "GET",
+                    url: "cancelledsupporterTable.php",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#example").html(response);
+                    }
+                });
+            });
+            
+            $("#recurringsupporter").click(function (e) { 
+                e.preventDefault();
+                $.ajax({
+                    type: "GET",
+                    url: "recurringsupporterTable.php",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#example").html(response);
+                    }
+                });
+            });
         });
     </script>
 </body>

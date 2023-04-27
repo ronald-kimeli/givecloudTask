@@ -167,7 +167,6 @@ function cancelledSupporters($total_pages,$page,$Headers,$conn,$profile){
                         $insertquery = "INSERT IGNORE INTO `cancelledSupporters` (supporter_id,first_name,last_name,email,status) 
                         VALUES('$supporter_id','$first_name', '$last_name', '$email', '$status'); ";
                         mysqli_multi_query($conn, $insertquery);
-                        print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                         // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
 

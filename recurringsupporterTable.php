@@ -1,7 +1,7 @@
 <?php
-$headername = 'Supporters Table';
+$headername = 'recurringsupporterTable';
 
-$links = array('index','recurringsupporterTable','cancelledsupporterTable');
+$links = array('index','supporterTable','cancelledsupporterTable');
 
 foreach($links as $names)
 {
@@ -12,10 +12,9 @@ foreach($links as $names)
 
 $linkname;
 
-
 require_once('src/components/header.php');
 
-require_once('src/pages/supporters.php');
+require_once('src/pages/recurringsupporter.php');
 
 require_once('src/components/footer.php');
 ?>

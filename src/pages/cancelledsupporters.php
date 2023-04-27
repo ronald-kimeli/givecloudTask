@@ -12,14 +12,19 @@
                 <th>Status</th>
             </tr>
 </thead>
+
 <tbody>
     <?php
     require_once('./src/config.php');
+    
+    $headername = 'cancelledSupporters Table';
 
-    $supporters = mysqli_query($conn, "SELECT * FROM supporters");
-    foreach ($supporters as $data) {
+    $linkname = '<a href="index.php" class="btn btn-md btn-primary">cancelledSupporters Table</a>';
 
-    $supporters_data .= '<tr>
+    $cancelledSupporters = mysqli_query($conn, "SELECT * FROM cancelledSupporters");
+    foreach ($cancelledSupporters as $data) {
+
+    $cancelledSupporters_data .= '<tr>
                         <td>' . $data['id'] . '</td>
                         <td>' . $data['supporter_id'] . '</td>
                         <td>' . $data['first_name'] . '</td>
@@ -28,7 +33,7 @@
                         <td>' . $data['status'] . '</td>
                     </tr>'; //Data for display on Web page
     }
-    echo $supporters_data;
+    echo $cancelledSupporters_data;
     ?>
 </tbody>
 

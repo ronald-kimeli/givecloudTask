@@ -1,11 +1,20 @@
 <?php
 $headername = 'Contributions Table';
 
-$linkname = '<a href="supporterTable.php" class="btn btn-md btn-primary">Supporters Table</a>';
+$links = array('supporterTable','recurringsupporterTable','cancelledsupporterTable');
 
-require_once('./src/components/header.php');
+foreach($links as $names)
+{
 
-require_once('./src/pages/contributers.php');
+   $linkname .= "<a  href='{$names}.php' type='button' class='dropdown-item '>{$names}</a>";
+   
+}
 
-require_once('./src/components/footer.php');
+$linkname;
+
+require_once('src/components/header.php');
+
+require_once('src/pages/contributers.php');
+
+require_once('src/components/footer.php');
 ?>

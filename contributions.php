@@ -1,7 +1,7 @@
 <?php
-require_once('./src/rest.inc.php');
-require_once('./src/config.php');
-require_once('./src/functions.php');
+require_once('src/rest.inc.php');
+require_once('src/config.php');
+require_once('src/functions.php');
 $page = 1; //we are starting from the first page
 
 $URL = "https://utcatholic.givecloud.co/admin/api/v2/contributions?page={$page}";
