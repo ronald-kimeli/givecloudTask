@@ -13,7 +13,7 @@ $Headers = array('Accept: application/json', 'Content-Type: application/json', "
 $response = RestCurl::get($URL, $Headers);
 
 $data = $response['data']->data; 
-
+print_r($data); exit;
 // Lets get total pages from meta
 $total_pages = $response['data']->meta->last_page;
 

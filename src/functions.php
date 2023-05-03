@@ -102,10 +102,12 @@ function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile){
                     $first_name = mysqli_real_escape_string($conn,$recurringsupporters[$row]->first_name);
                     $last_name = mysqli_real_escape_string($conn,$recurringsupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$recurringsupporters[$row]->email);
+                    $phone = mysqli_real_escape_string($conn,$recurringsupporters[$row]->billing_address->phone);
+                    $created_at = mysqli_real_escape_string($conn,$recurringsupporters[$row]->created_at);
                     $status = mysqli_real_escape_string($conn,$recurringsupporters[$row]->active);
 
-                        $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id,first_name,last_name,email,status) 
-                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$status'); ";
+                        $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id, first_name, last_name, email, phone, created_at, status) 
+                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                         mysqli_multi_query($conn, $insertquery);
                         // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
@@ -120,10 +122,12 @@ function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile){
                     $first_name = mysqli_real_escape_string($conn,$recurringsupporters[$row]->first_name);
                     $last_name = mysqli_real_escape_string($conn,$recurringsupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$recurringsupporters[$row]->email);
+                    $phone = mysqli_real_escape_string($conn,$recurringsupporters[$row]->billing_address->phone);
+                    $created_at = mysqli_real_escape_string($conn,$recurringsupporters[$row]->created_at);
                     $status = mysqli_real_escape_string($conn,$recurringsupporters[$row]->active);
 
-                        $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id,first_name,last_name,email,status) 
-                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$status'); ";
+                        $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id, first_name, last_name, email, phone, created_at, status) 
+                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                         mysqli_multi_query($conn, $insertquery);
                         // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
@@ -143,12 +147,14 @@ function cancelledSupporters($total_pages,$page,$Headers,$conn,$profile){
                     $first_name = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->first_name);
                     $last_name = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->email);
+                    $phone = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->billing_address->phone);
+                    $created_at = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->created_at);
                     $status = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->active);
 
-                        $insertquery = "INSERT IGNORE INTO `cancelledSupporters` (supporter_id,first_name,last_name,email,status) 
-                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$status'); ";
+                        $insertquery = "INSERT IGNORE INTO `cancelledSupporters` (supporter_id,first_name,last_name,email,phone,created_at,status) 
+                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                         mysqli_multi_query($conn, $insertquery);
-                        print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
+                        // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                         // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
             }
@@ -162,10 +168,12 @@ function cancelledSupporters($total_pages,$page,$Headers,$conn,$profile){
                     $first_name = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->first_name);
                     $last_name = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->email);
+                    $phone = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->billing_address->phone);
+                    $created_at = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->created_at);
                     $status = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->active);
 
-                        $insertquery = "INSERT IGNORE INTO `cancelledSupporters` (supporter_id,first_name,last_name,email,status) 
-                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$status'); ";
+                        $insertquery = "INSERT IGNORE INTO `cancelledSupporters` (supporter_id,first_name,last_name,email,phone,created_at,status) 
+                        VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                         mysqli_multi_query($conn, $insertquery);
                         // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
