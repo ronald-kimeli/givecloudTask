@@ -143,8 +143,31 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-            let link = 'contributions';
+            let link = '';
 
+            if (link = 'contributions') {
+                $(`#${link}`).click(function(e) {
+                    e.preventDefault();
+                    // console.log(e.target.id);                    
+                    const userid = e.target.id;
+                    $.ajax({
+                        url: 'data.php',
+                        type: 'post',
+                        data: {
+                            userid: userid
+                        },
+                        success: function(response) {
+                            $('#apidata').html('');
+                            $('.card-title').html('');
+                            $('.card-title').append(userid);
+                            $('#apidata').append(response);
+                            $('#example').DataTable({});
+                        }
+                    });
+                });
+            }
+            
+            
             if (link = 'supporters') {
                 $(`#${link}`).click(function(e) {
                     e.preventDefault();

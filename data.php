@@ -1,5 +1,4 @@
 <?php
-$links = array('supporters','recurringsupporter','cancelledsupporters','contributions');
 
 $userid = $_POST['userid']; 
 
