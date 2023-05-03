@@ -1,6 +1,6 @@
 <?php
 
-$links = array('supporters','recurringsupporter','cancelledsupporters');
+$links = array('supporters','recurringsupporter','cancelledsupporters','contributions');
 
 foreach($links as $names)
 {

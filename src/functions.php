@@ -1,5 +1,6 @@
 <?php
 
+
 function saveSupporters($total_pages,$page,$Headers,$conn){
     if($total_pages > 1){
         for ($i = $page; $i <= $total_pages; $i++){
@@ -11,10 +12,12 @@ function saveSupporters($total_pages,$page,$Headers,$conn){
                 $first_name = mysqli_real_escape_string($conn,$supporters[$row]->first_name);
                 $last_name = mysqli_real_escape_string($conn,$supporters[$row]->last_name);
                 $email = mysqli_real_escape_string($conn,$supporters[$row]->email);
+                $phone = mysqli_real_escape_string($conn,$supporters[$row]->billing_address->phone);
+                $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($supporters[$row]->created_at)));
                 $status = mysqli_real_escape_string($conn,$supporters[$row]->active);
             
-                    $insertquery = "INSERT IGNORE INTO `supporters` (supporter_id,first_name,last_name,email,status) 
-                    VALUES('$supporter_id','$first_name', '$last_name', '$email', '$status'); ";
+                    $insertquery = "INSERT IGNORE INTO `supporters` (supporter_id,first_name,last_name,email,phone,created_at,status) 
+                    VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                     mysqli_multi_query($conn, $insertquery);
                     // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
@@ -29,10 +32,12 @@ function saveSupporters($total_pages,$page,$Headers,$conn){
                 $first_name = mysqli_real_escape_string($conn,$supporters[$row]->first_name);
                 $last_name = mysqli_real_escape_string($conn,$supporters[$row]->last_name);
                 $email = mysqli_real_escape_string($conn,$supporters[$row]->email);
+                $phone = mysqli_real_escape_string($conn,$supporters[$row]->billing_address->phone);
+                $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($supporters[$row]->created_at)));
                 $status = mysqli_real_escape_string($conn,$supporters[$row]->active);
             
-                    $insertquery = "INSERT IGNORE INTO `supporters` (supporter_id,first_name,last_name,email,status) 
-                    VALUES('$supporter_id','$first_name', '$last_name', '$email', '$status'); ";
+                    $insertquery = "INSERT IGNORE INTO `supporters` (supporter_id,first_name,last_name,email,phone,created_at,status) 
+                    VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                     mysqli_multi_query($conn, $insertquery);
                     // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
@@ -48,19 +53,37 @@ function saveContributions($total_pages,$page,$Headers,$conn){
             $response = RestCurl::get($URL, $Headers);
             $contributions = $response['data']->data;
             for($row = 0; $row < count($contributions); $row++){ 
-                $email = $contributions[$row]->email;
-                $email = $contributions[$row]->supporter->email;
+                $email = @$contributions[$row]->email;
+                $email = @$contributions[$row]->supporter->email;
                 $email = mysqli_real_escape_string($conn,$email);
+                
                 $supporter_id = mysqli_real_escape_string($conn,$contributions[$row]->supporter->id);
                 $supporter_deprecated_id = mysqli_real_escape_string($conn,$contributions[$row]->supporter->id_deprecated);
                 $contribution_id = mysqli_real_escape_string($conn,$contributions[$row]->id);
                 $contribution_number = mysqli_real_escape_string($conn,$contributions[$row]->contribution_number);
                 $total_amount = mysqli_real_escape_string($conn,$contributions[$row]->total_amount);
                 $is_paid = mysqli_real_escape_string($conn,$contributions[$row]->is_paid);
-                $is_recurring = mysqli_real_escape_string($conn,$contributions[$row]->line_items[0]->is_recurring);
-            
-                    $insertquery = "INSERT IGNORE INTO contributions(email, supporter_id, supporter_deprecated_id, contribution_id, contribution_number, total_amount, is_paid, is_recurring) 
-                                        VALUES( '$email',  '$supporter_id',  '$supporter_deprecated_id',  '$contribution_id', '$contribution_number', '$total_amount', '$is_paid', '$is_recurring'); ";
+               
+                    $lineitems = $contributions[$row]->line_items;
+                    for($lineitem = 0; $lineitem < count($lineitems); $lineitem++){ 
+                        
+                        $is_recurring = mysqli_real_escape_string($conn,$lineitems[$lineitem]->is_recurring);
+                        $recurring_description = mysqli_real_escape_string($conn,$lineitems[$lineitem]->recurring_description);
+                        
+                        if(empty($recurring_description)){
+                            $date_started = '';
+                        }else{
+                            $date_started = find_date($recurring_description);
+                            $date_started = mysqli_real_escape_string($conn, implode('-', $date_started));
+                        } 
+                                           
+                        $recurring_amount = mysqli_real_escape_string($conn,$lineitems[$lineitem]->recurring_amount);
+                        
+                        $billing_period = mysqli_real_escape_string($conn,$lineitems[$lineitem]->variant->billing_period);
+                    }
+
+                    $insertquery = "INSERT IGNORE INTO contributions(email, supporter_id, supporter_deprecated_id, contribution_id, contribution_number, total_amount, is_paid, is_recurring,date_started,recurring_amount,billing_period) 
+                                        VALUES( '$email',  '$supporter_id',  '$supporter_deprecated_id',  '$contribution_id', '$contribution_number', '$total_amount', '$is_paid', '$is_recurring', '$date_started', '$recurring_amount', '$billing_period'); ";
                     mysqli_multi_query($conn, $insertquery);
                     // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
@@ -71,23 +94,40 @@ function saveContributions($total_pages,$page,$Headers,$conn){
             $response = RestCurl::get($URL, $Headers);
             $contributions = $response['data']->data;
             for($row = 0; $row < count($contributions); $row++){ 
-                $email = $contributions[$row]->email;
-                $email = $contributions[$row]->supporter->email;
+                $email = @$contributions[$row]->email;
+                $email = @$contributions[$row]->supporter->email;
                 $email = mysqli_real_escape_string($conn,$email);
+                
                 $supporter_id = mysqli_real_escape_string($conn,$contributions[$row]->supporter->id);
                 $supporter_deprecated_id = mysqli_real_escape_string($conn,$contributions[$row]->supporter->id_deprecated);
                 $contribution_id = mysqli_real_escape_string($conn,$contributions[$row]->id);
                 $contribution_number = mysqli_real_escape_string($conn,$contributions[$row]->contribution_number);
                 $total_amount = mysqli_real_escape_string($conn,$contributions[$row]->total_amount);
                 $is_paid = mysqli_real_escape_string($conn,$contributions[$row]->is_paid);
-                $is_recurring = mysqli_real_escape_string($conn,$contributions[$row]->line_items[0]->is_recurring);
-            
-                    $insertquery = "INSERT IGNORE INTO contributions(email, supporter_id, supporter_deprecated_id, contribution_id, contribution_number, total_amount, is_paid, is_recurring) 
-                                        VALUES( '$email',  '$supporter_id',  '$supporter_deprecated_id',  '$contribution_id', '$contribution_number', '$total_amount', '$is_paid', '$is_recurring'); ";
+                
+                    $lineitems = $contributions[$row]->line_items;
+                    for($lineitem = 0; $lineitem < count($lineitems); $lineitem++){ 
+                        
+                        $is_recurring = mysqli_real_escape_string($conn,$lineitems[$lineitem]->is_recurring);
+                        $recurring_description = mysqli_real_escape_string($conn,$lineitems[$lineitem]->recurring_description);
+                        
+                        if(empty($recurring_description)){
+                            $date_started = '';
+                        }else{
+                            $date_started = find_date($recurring_description);
+                            $date_started = mysqli_real_escape_string($conn, implode('-', $date_started));
+                        } 
+                                        
+                        $recurring_amount = mysqli_real_escape_string($conn,$lineitems[$lineitem]->recurring_amount);
+                        
+                        $billing_period = mysqli_real_escape_string($conn,$lineitems[$lineitem]->variant->billing_period);
+                    }
+
+                    $insertquery = "INSERT IGNORE INTO contributions(email, supporter_id, supporter_deprecated_id, contribution_id, contribution_number, total_amount, is_paid, is_recurring,date_started,recurring_amount,billing_period) 
+                                        VALUES( '$email',  '$supporter_id',  '$supporter_deprecated_id',  '$contribution_id', '$contribution_number', '$total_amount', '$is_paid', '$is_recurring', '$date_started', '$recurring_amount', '$billing_period'); ";
                     mysqli_multi_query($conn, $insertquery);
                     // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
                }
-
     }
 }
 
@@ -103,7 +143,7 @@ function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile){
                     $last_name = mysqli_real_escape_string($conn,$recurringsupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$recurringsupporters[$row]->email);
                     $phone = mysqli_real_escape_string($conn,$recurringsupporters[$row]->billing_address->phone);
-                    $created_at = mysqli_real_escape_string($conn,$recurringsupporters[$row]->created_at);
+                    $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($recurringsupporters[$row]->created_at)));
                     $status = mysqli_real_escape_string($conn,$recurringsupporters[$row]->active);
 
                         $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id, first_name, last_name, email, phone, created_at, status) 
@@ -123,7 +163,7 @@ function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile){
                     $last_name = mysqli_real_escape_string($conn,$recurringsupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$recurringsupporters[$row]->email);
                     $phone = mysqli_real_escape_string($conn,$recurringsupporters[$row]->billing_address->phone);
-                    $created_at = mysqli_real_escape_string($conn,$recurringsupporters[$row]->created_at);
+                    $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($recurringsupporters[$row]->created_at)));
                     $status = mysqli_real_escape_string($conn,$recurringsupporters[$row]->active);
 
                         $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id, first_name, last_name, email, phone, created_at, status) 
@@ -148,7 +188,7 @@ function cancelledSupporters($total_pages,$page,$Headers,$conn,$profile){
                     $last_name = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->email);
                     $phone = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->billing_address->phone);
-                    $created_at = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->created_at);
+                    $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($cancelledSupporters[$row]->created_at)));
                     $status = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->active);
 
                         $insertquery = "INSERT IGNORE INTO `cancelledSupporters` (supporter_id,first_name,last_name,email,phone,created_at,status) 
@@ -169,7 +209,7 @@ function cancelledSupporters($total_pages,$page,$Headers,$conn,$profile){
                     $last_name = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->last_name);
                     $email = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->email);
                     $phone = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->billing_address->phone);
-                    $created_at = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->created_at);
+                    $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($cancelledSupporters[$row]->created_at)));
                     $status = mysqli_real_escape_string($conn,$cancelledSupporters[$row]->active);
 
                         $insertquery = "INSERT IGNORE INTO `cancelledSupporters` (supporter_id,first_name,last_name,email,phone,created_at,status) 

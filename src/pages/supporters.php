@@ -15,6 +15,8 @@ foreach ($supporters as $data) {
                     <td>' . $data['first_name'] . '</td>
                     <td>' . $data['last_name'] . '</td>
                     <td>' . $data['email'] . '</td>
+                    <td>' . $data['phone'] . '</td>
+                    <td>' . $data['created_at'] . '</td>
                     <td>' . $data['status'] . '</td>
                 </tr>
                 '; //Data for display on Web page
@@ -28,6 +30,8 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <th>First_name</th>
             <th>Last_name</th>
             <th>Email</th>
+            <td>Phone</td>
+            <td>Created_at</td>
             <th>Status</th>
         </tr>
     </thead>
@@ -39,6 +43,8 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <th>First_name</th>
             <th>Last_name</th>
             <th>Email</th>
+            <td>Phone</td>
+            <td>Created_at</td>
             <th>Status</th>
         </tr>
     </tfoot>

@@ -19,6 +19,9 @@ foreach ($contributions as $data) {
                                 <td>' . $data['total_amount'] . '</td>
                                 <td>' . $data['is_paid'] . '</td>
                                 <td>' . $data['is_recurring'] . '</td>
+                                <td>' . $data['date_started'] . '</td>
+                                <td>' . $data['recurring_amount'] . '</td>
+                                <td>' . $data['billing_period'] . '</td>
                             </tr>';
 }
     
@@ -34,6 +37,9 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <th>Total_amount</th>
             <th>Is_paid</th>
             <th>Is_recurring</th>
+            <th>Date_started</th>
+            <th>Recurring_amount</th>
+            <th>Billing_period</th>
         </tr>
     </thead>
     <tbody>'.$contributions_data.'</tbody>
@@ -48,6 +54,9 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <th>Total_amount</th>
             <th>Is_paid</th>
             <th>Is_recurring</th>
+            <th>Date_started</th>
+            <th>Recurring_amount</th>
+            <th>Billing_period</th>
         </tr>
     </tfoot>
 </table>';
