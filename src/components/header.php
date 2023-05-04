@@ -10,10 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimal-ui">
-    <meta name="description" content="This is responsive portfolio">
-    <meta name="keywords" content="portfolio">
-    <meta name="author" content="portfolio">
-    <title>GiveCloud</title>
+    <meta name="description" content="givecloud databases">
+    <meta name="keywords" content="givecloud">
+    <meta name="author" content="https://KimelirR">
+    <title>givecloud</title>
 
     <link href="./app-assets/css/css93c2.css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
     <!-- BEGIN: Vendor CSS-->
@@ -101,10 +101,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <div id='apidata' class="table-responsive">
-                                            <!-- table table-striped table-bordered text-inputs-searching -->
-                                            <!-- <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%"> -->
-                                            <!-- <table id="example" class="table table-striped table-bordered selection-multiple-rows">
-                                            </table> -->
+                               
                                         </div>
                                     </div>
                                 </div>
@@ -140,118 +137,7 @@
     <script src="./app-assets/js/scripts/tables/datatables/datatable-api.js" type="text/javascript"></script>
     <!-- END: Page JS-->
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            let link = '';
-
-            if (link = 'contributions') {
-                $(`#${link}`).click(function(e) {
-                    e.preventDefault();
-                    // console.log(e.target.id);                    
-                    const userid = e.target.id;
-                    $.ajax({
-                        url: 'data.php',
-                        type: 'post',
-                        data: {
-                            userid: userid
-                        },
-                        success: function(response) {
-                            $('#apidata').html('');
-                            $('.card-title').html('');
-                            $('.card-title').append(userid);
-                            $('#apidata').append(response);
-                            $('#example').DataTable({});
-                        }
-                    });
-                });
-            }
-            
-            
-            if (link = 'supporters') {
-                $(`#${link}`).click(function(e) {
-                    e.preventDefault();
-                    // console.log(e.target.id);                    
-                    const userid = e.target.id;
-                    $.ajax({
-                        url: 'data.php',
-                        type: 'post',
-                        data: {
-                            userid: userid
-                        },
-                        success: function(response) {
-                            $('#apidata').html('');
-                            $('.card-title').html('');
-                            $('.card-title').append(userid);
-                            $('#apidata').append(response);
-                            $('#example').DataTable({});
-                        }
-                    });
-                });
-            }
-
-            if (link = 'recurringsupporter') {
-                $(`#${link}`).click(function(e) {
-                    e.preventDefault();
-                    // console.log(e.target.id);                    
-                    const userid = e.target.id;
-                    $.ajax({
-                        url: 'data.php',
-                        type: 'post',
-                        data: {
-                            userid: userid
-                        },
-                        success: function(response) {
-                            $('#apidata').html('');
-                            $('.card-title').html('');
-                            $('.card-title').append(userid);
-                            $('#apidata').append(response);
-                            $('#example').DataTable({});
-                        }
-                    });
-                });
-            }
-
-            if (link = 'cancelledsupporters') {
-                $(`#${link}`).click(function(e) {
-                    e.preventDefault();
-                    // console.log(e.target.id);                    
-                    const userid = e.target.id;
-                    $.ajax({
-                        url: 'data.php',
-                        type: 'post',
-                        data: {
-                            userid: userid
-                        },
-                        success: function(response) {
-                            $('#apidata').html('');
-                            $('.card-title').html('');
-                            $('.card-title').append(userid);
-                            $('#apidata').append(response);
-                            $('#example').DataTable({});
-                        }
-                    });
-                });
-            }
-
-            const userid = 'contributions';
-            $.ajax({
-                url: 'data.php',
-                type: 'post',
-                data: {
-                    userid: userid
-                },
-                success: function(response) {
-                    $('#apidata').html('');
-                    $('.card-title').html('');
-                    $('.card-title').append(userid);
-                    $('#apidata').append(response);
-                    $('#example').DataTable({});
-                }
-            });
-
-        });
-    </script>
+    <script src="src/components/header.js"></script>
 </body>
 <!-- END: Body-->
 
