@@ -290,3 +290,63 @@ function backupDatabaseAllTables($dbhost,$dbusername,$dbpassword,$dbname,$tables
     unlink($file_name);
     echo "Database Export Successfully!";
 }
+
+
+/**
+ * Finds weeks by two dates
+ * @param $startDate
+ * @param $endDate
+ * @return array
+ */
+
+ function findWeeksBetweenTwoDates($startDate, $endDate)
+ {
+     $weeks = [];
+     while (strtotime($startDate) <= strtotime($endDate)) {
+         $oldStartDate = $startDate;
+         $startDate = date('Y-m-d', strtotime('+7 day', strtotime($startDate)));
+         if (strtotime($startDate) > strtotime($endDate)) {
+             $week = [$oldStartDate, $endDate];
+         } else {
+             $week = [$oldStartDate, date('Y-m-d', strtotime('-1 day', strtotime($startDate)))];
+         }
+ 
+         $weeks[] = $week;
+ 
+     }
+ 
+     return $weeks;
+ }
+ function daysBetween($startDate, $endDate)
+ {
+     return date_diff(
+         date_create($endDate),
+         date_create($startDate)
+     )->format('%a');
+ }
+ 
+ 
+ 
+ function getPayWeekly($weeks)
+ {
+     $count = 0;
+     for ($i = 0; $i < count($weeks); $i++):
+         $initialDate = $weeks[$i][0];
+         $endingDate = $weeks[$i][1];
+         if (daysBetween($initialDate, $endingDate) + 1 >= 2) {
+             $count++;
+         }
+     endfor;
+ 
+     return $count;
+ }
+ function getPayMonths($startDate, $endDate = FALSE)
+{
+	$endDate OR $endDate = time();
+    
+	$startDate = new DateTime("@$startDate");
+	$endDate   = new DateTime("@$endDate");
+	$diff  = $startDate->diff($endDate);
+
+	return $diff->format('%y') * 12 + $diff->format('%m');
+}

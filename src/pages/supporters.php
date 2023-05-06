@@ -2,8 +2,6 @@
 
 require_once('src/config.php');
 
-$headername = 'supporter Table';
-
 $supporters = mysqli_query($conn, "SELECT * FROM supporters");
 
 $supporters_data = '';

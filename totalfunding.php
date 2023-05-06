@@ -1,47 +1,27 @@
 <?php
+// require_once('src/functions.php');
 
-$startDate = '2023-04-01';
-$endDate = '2023-04-08';
-
+$start = strtotime('2023-04-07');
+$end = strtotime('2023-05-08');
 
 /**
- * Finds weeks by two dates
- * @param $startDate
- * @param $endDate
- * @return array
+ * Calculates how many months is past between two timestamps.
+ *
+ * @param  int $start Start timestamp.
+ * @param  int $end   Optional end timestamp.
+ *
+ * @return int
  */
- 
-function findWeeksBetweenTwoDates($startDate, $endDate)
+function getPayMonths($start, $end = FALSE)
 {
-	$weeks = [];
-	while (strtotime($startDate) <= strtotime($endDate)) {
-		$oldStartDate = $startDate;
-		$startDate = date('Y-m-d', strtotime('+7 day', strtotime($startDate)));
-		if (strtotime($startDate) > strtotime($endDate)) {
-                $week = [$oldStartDate, $endDate]; 
-		}
-        
-		else {
-                $week = [$oldStartDate, date('Y-m-d', strtotime('-1 day', strtotime($startDate))) ];			
-		}
+	$end OR $end = time();
 
-		$weeks[] = $week;
-     
-	}
+	$start = new DateTime("@$start");
+	$end   = new DateTime("@$end");
+	$diff  = $start->diff($end);
 
-	return $weeks;
+	return $diff->format('%y') * 12 + $diff->format('%m');
 }
 
 
-
-function daysBetween($startDate, $endDate) {
-    return date_diff(
-        date_create($endDate),  
-        date_create($startDate)
-    )->format('%a');
-}
-
-print_r(daysBetween($startDate, $endDate));
-print_r(findWeeksBetweenTwoDates($startDate, $endDate));
-
-?>
+print_r(getPayMonths($start, $end));
