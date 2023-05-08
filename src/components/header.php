@@ -76,6 +76,7 @@
                                 <div class="card-header">
                                     <h4 class="card-title"> <?php echo "Table" ?>
                                     </h4>
+                                    <button id="reducedArray" class="btn btn-sm btn-primary">Click me</button>
                                     <a class="heading-elements-toggle">
                                         <i class="la la-ellipsis-v font-medium-3"></i>
                                     </a>

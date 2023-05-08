@@ -1,6 +1,5 @@
 <?php
 
-
 function saveSupporters($total_pages,$page,$Headers,$conn){
     if($total_pages > 1){
         for ($i = $page; $i <= $total_pages; $i++){

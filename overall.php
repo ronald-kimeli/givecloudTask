@@ -1,6 +1,7 @@
 <?php
 require_once('src/config.php');
 require_once('src/functions.php');
+header('Content-Type: application/json; charset=utf-8');
 
 $contributions = mysqli_query($conn, "SELECT recurring_amount,sum(total_amount) AS total_amount,email, billing_period FROM contributions GROUP BY email,billing_period ");
 
@@ -24,7 +25,7 @@ foreach ($contributions as $data) {
         $totaldonation = $data['total_amount'];
         // $contribution['email'] = $email;
         // $contribution['billing_period'] = $billing_period;
-            $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+            $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
         // print_r($totaldonation.$email);
         // $insertquery="UPDATE supporters SET total_amount='$totaldonation' WHERE email='$email'";
         // mysqli_multi_query($conn, $insertquery);
@@ -48,7 +49,7 @@ foreach ($contributions as $data) {
             if ($payweeks == 0 && $startDate) {
                 $payweeks = 1;
                 $totaldonation = $payweeks * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
                 // $contribution['total_amount'] = $totaldonation;
@@ -56,7 +57,7 @@ foreach ($contributions as $data) {
                 // mysqli_multi_query($conn, $insertquery);
             } else {
                 $totaldonation = $payweeks * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
                 // $contribution['total_amount'] = $totaldonation;
@@ -76,7 +77,7 @@ foreach ($contributions as $data) {
             if ($payweeks == 0 && $startDate) {
                 $payweeks = 1;
                 $totaldonation = $payweeks * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
                 // $contribution['total_amount'] = $totaldonation;
@@ -84,7 +85,7 @@ foreach ($contributions as $data) {
                 // mysqli_multi_query($conn, $insertquery);
             } else {
                 $totaldonation = $payweeks * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
                 // $contribution['total_amount'] = $totaldonation;
@@ -113,7 +114,7 @@ foreach ($contributions as $data) {
             if ($paymonths == 0 && $startDate) {
                 $paymonths = 1;
                 $totaldonation = $paymonths * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
                 // $contribution['total_amount'] = $totaldonation;
@@ -121,7 +122,7 @@ foreach ($contributions as $data) {
                 // mysqli_multi_query($conn, $insertquery);
             } else {
                 $totaldonation = $paymonths * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
 
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
@@ -143,7 +144,7 @@ foreach ($contributions as $data) {
             if ($paymonths == 0 && $startDate) {
                 $paymonths = 1;
                 $totaldonation = $paymonths * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
                 // $contribution['total_amount'] = $totaldonation;
@@ -151,7 +152,7 @@ foreach ($contributions as $data) {
                 // mysqli_multi_query($conn, $insertquery);
             } else {
                 $totaldonation = $paymonths * $recurring_amount;
-                $contribution[]= ['email' => $email,'total_amount' => $totaldonation];
+                $contribution[]= ['email' => $email,'total_amount' => [$totaldonation]];
                 // $contribution['email'] = $email;
                 // $contribution['billing_period'] = $billing_period;
                 // $contribution['total_amount'] = $totaldonation;
@@ -171,6 +172,45 @@ foreach ($contributions as $data) {
     
 // }
 
-print_r($contribution);
+// // echo '<pre>';
+echo json_encode($contribution);
 
-// print_r($newArray);
+// $outer_array = array();
+// $unique_array = array();
+// foreach($contribution as $key => $value)
+// {
+//     $inner_array = array();
+
+//     $fid_value = $value['email'];
+//     if(!in_array($value['email'], $unique_array))
+//     {
+//             array_push($unique_array, $fid_value);
+//             // unset($value['email']);
+//             array_push($inner_array, $value);
+//             $outer_array[$fid_value] = $inner_array;
+
+
+//     }else{
+//             // unset($value['email']);
+//             array_push($outer_array[$fid_value], $value);
+
+//     }
+// }
+// var_dump(array_values($outer_array));
+
+
+// // print_r($contribution);
+
+// // print_r($newArray);
+
+// foreach ($contribution as $k=>$v) {
+
+//     if (is_array($v)) {
+//         $aWhere[] = $k . ' in ('.implode(', ',$v).')';
+//     }
+//     else {
+//         $aWhere[] = $k . ' = ' . $v;
+//     }
+//  }
+
+//  print_r($aWhere);
