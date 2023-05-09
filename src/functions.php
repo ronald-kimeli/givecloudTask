@@ -55,8 +55,8 @@ function saveContributions($total_pages,$page,$Headers,$conn){
                 $email = @$contributions[$row]->supporter->email;
                 $email = mysqli_real_escape_string($conn,$email);
                 
-                $supporter_id = mysqli_real_escape_string($conn,$contributions[$row]->supporter->id);
-                $supporter_deprecated_id = mysqli_real_escape_string($conn,$contributions[$row]->supporter->id_deprecated);
+                $supporter_id = mysqli_real_escape_string($conn,@$contributions[$row]->supporter->id);
+                $supporter_deprecated_id = mysqli_real_escape_string($conn,@$contributions[$row]->supporter->id_deprecated);
                 $contribution_id = mysqli_real_escape_string($conn,$contributions[$row]->id);
                 $contribution_number = mysqli_real_escape_string($conn,$contributions[$row]->contribution_number);
                 $total_amount = mysqli_real_escape_string($conn,$contributions[$row]->total_amount);
