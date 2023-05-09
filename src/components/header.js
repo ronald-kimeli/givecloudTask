@@ -86,7 +86,7 @@ $(document).ready(function() {
         });
     }
 
-    const userid = 'contributions';
+    const userid = 'supporters';
     $.ajax({
         url: 'data.php',
         type: 'post',
