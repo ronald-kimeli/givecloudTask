@@ -14,6 +14,7 @@ foreach ($supporters as $data) {
                     <td>' . $data['last_name'] . '</td>
                     <td>' . $data['email'] . '</td>
                     <td>' . $data['phone'] . '</td>
+                    <td>' . $data['total_amount'] . '</td>
                     <td>' . $data['created_at'] . '</td>
                     <td>' . $data['status'] . '</td>
                 </tr>
@@ -29,6 +30,7 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <th>Last_name</th>
             <th>Email</th>
             <td>Phone</td>
+            <td>Amount</td>
             <td>Created_at</td>
             <th>Status</th>
         </tr>
@@ -42,6 +44,7 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <th>Last_name</th>
             <th>Email</th>
             <td>Phone</td>
+            <td>Amount</td>
             <td>Created_at</td>
             <th>Status</th>
         </tr>

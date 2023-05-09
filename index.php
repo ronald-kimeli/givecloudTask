@@ -8,7 +8,6 @@ foreach($links as $names)
 }
 
 require_once('src/components/header.php');
-
 ?>
 
 

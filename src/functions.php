@@ -1,5 +1,4 @@
 <?php
-
 function saveSupporters($total_pages,$page,$Headers,$conn){
     if($total_pages > 1){
         for ($i = $page; $i <= $total_pages; $i++){
@@ -250,7 +249,6 @@ function backupDatabaseAllTables($dbhost,$dbusername,$dbpassword,$dbname,$tables
                 $return .= "INSERT INTO $table VALUES(";
                 for($j=0; $j < $numColumns; $j++) { 
                     $row[$j] = addslashes($row[$j]);
-                    $row[$j] = $row[$j];
                     if (isset($row[$j])) { 
                         $return .= '"'.$row[$j].'"' ;
                     } else { 
@@ -323,8 +321,6 @@ function backupDatabaseAllTables($dbhost,$dbusername,$dbpassword,$dbname,$tables
          date_create($startDate)
      )->format('%a');
  }
- 
- 
  
  function getPayWeekly($weeks)
  {
