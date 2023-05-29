@@ -408,12 +408,6 @@ function sendEmailNotification($username, $note_email, $supporter_id, $company_n
    //Content
   $mail->isHTML(true);                                  //Set email format to HTML
   $mail->Subject = "New recurring supporter Givecloud Notification";
-
-//   $mail_template  = "
-//   <h2> This is to inform you that new recurring supporter identified by id {$supporter_id} has been added to database</h2>
-//   <h5>Recurring Supporter above was created on {$created_at}</h5>
-//   <br/><br/>
-//   ";
   
   $mail_template = "
   <html>
