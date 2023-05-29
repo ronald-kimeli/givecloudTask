@@ -14,4 +14,4 @@ $data = $response['data']->data;
 // Lets get total pages from meta
 $total_pages = $response['data']->meta->last_page;
 
-$recurringsupporters = saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile);
+$recurringsupporters = saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile,$mail_password);

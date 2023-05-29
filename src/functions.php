@@ -1,4 +1,11 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
 function saveSupporters($total_pages,$page,$Headers,$conn){
     if($total_pages > 1){
         for ($i = $page; $i <= $total_pages; $i++){
@@ -129,7 +136,7 @@ function saveContributions($total_pages,$page,$Headers,$conn){
     }
 }
 
-function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile){
+function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile,$mail_password){
     if($total_pages > 1){
         for ($i = $page; $i <= $total_pages; $i++){
             $URL = "https://utcatholic.givecloud.co/admin/api/v2/supporters?page={$i}&&filter[recurringProfile]={$profile}";
@@ -143,11 +150,19 @@ function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile){
                     $phone = mysqli_real_escape_string($conn,$recurringsupporters[$row]->billing_address->phone);
                     $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($recurringsupporters[$row]->created_at)));
                     $status = mysqli_real_escape_string($conn,$recurringsupporters[$row]->active);
-
+                    
+                    
+                    if(ifNotExists($conn, $supporter_id)){
+                        $note_email = 'kimeliryans@gmail.com';
+                        $company_name = 'Givecloud Notification';
+                        $username = 'Ronald';
+                        
                         $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id, first_name, last_name, email, phone, created_at, status) 
                         VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                         mysqli_multi_query($conn, $insertquery);
-                        // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
+                             
+                        sendEmailNotification($username, $note_email, $supporter_id, $company_name, $created_at, $last_name,$first_name, $mail_password);
+                    }
                }
             }
         }
@@ -163,11 +178,18 @@ function saverecurringsupporters($total_pages,$page,$Headers,$conn,$profile){
                     $phone = mysqli_real_escape_string($conn,$recurringsupporters[$row]->billing_address->phone);
                     $created_at = mysqli_real_escape_string($conn,date('Y-m-d',strtotime($recurringsupporters[$row]->created_at)));
                     $status = mysqli_real_escape_string($conn,$recurringsupporters[$row]->active);
-
+                    
+                    if(ifNotExists($conn, $supporter_id)){
+                        $note_email = 'kimeliryans@gmail.com';
+                        $company_name = 'Givecloud Notification';
+                        $username = 'Ronald';
+                        
                         $insertquery = "INSERT IGNORE INTO `recurringsupporters` (supporter_id, first_name, last_name, email, phone, created_at, status) 
                         VALUES('$supporter_id','$first_name', '$last_name', '$email', '$phone', '$created_at', '$status'); ";
                         mysqli_multi_query($conn, $insertquery);
-                        // print_r("Email: {$email} Inserted Successfully!"). PHP_EOL ;
+                             
+                        sendEmailNotification($username, $note_email, $supporter_id, $company_name, $created_at, $last_name,$first_name, $mail_password);
+                    }
                }
 
     }
@@ -344,4 +366,70 @@ function backupDatabaseAllTables($dbhost,$dbusername,$dbpassword,$dbname,$tables
 	$diff  = $startDate->diff($endDate);
 
 	return $diff->format('%y') * 12 + $diff->format('%m');
+}
+
+function ifNotExists($conn, $supporter_id){
+    $query_recurring = mysqli_query($conn, "SELECT supporter_id FROM recurringsupporters WHERE supporter_id='$supporter_id'");
+
+    if (mysqli_num_rows($query_recurring) > 0) {
+        //Service Ids if exists in database
+        return false;
+    }else{
+        return true;
+    }
+}
+
+/**
+ * Summary of sendEmailNotification
+ * @param mixed $gmail
+ * @param mixed $company_name
+ * @return void
+ */
+function sendEmailNotification($username, $note_email, $supporter_id, $company_name, $created_at, $last_name,$first_name, $mail_password)
+{
+  $mail = new PHPMailer(true);
+
+  // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+  $mail->isSMTP();
+  $mail->SMTPAuth   = true;  
+
+  $mail->Host       = "smtp.gmail.com";                                             
+  $mail->Username   = "leavemanagement254@gmail.com";                     //SMTP username
+  $mail->Password   = $mail_password;
+                              
+  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            
+  $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+  //xjssirazbecywkjg
+  //Recipients
+  
+  $mail->setFrom("noreply@givecloud-notification.com", $company_name);
+  $mail->addAddress($note_email);     //Add a recipient
+  
+   //Content
+  $mail->isHTML(true);                                  //Set email format to HTML
+  $mail->Subject = "New recurring supporter Givecloud Notification";
+
+//   $mail_template  = "
+//   <h2> This is to inform you that new recurring supporter identified by id {$supporter_id} has been added to database</h2>
+//   <h5>Recurring Supporter above was created on {$created_at}</h5>
+//   <br/><br/>
+//   ";
+  
+  $mail_template = "
+  <html>
+  <body>
+      <p>Hi {$username},<br>
+        Notification sent to your email concerning <br>
+         The supporter <strong>$first_name $last_name</strong> <br>
+         recurring supporter id <strong>{$supporter_id}</strong> who was added on {$created_at}<br>
+          Go to your website http://173.255.245.185/givecloud/ and search for the id above<hr>
+      Keep checking your email for new notification!.
+      </p>
+  </body>
+  </html>
+  ";
+ 
+  $mail->Body    = $mail_template;
+  $mail->send();
+  // echo 'Message has been sent';
 }
