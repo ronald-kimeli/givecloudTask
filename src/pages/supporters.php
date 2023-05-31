@@ -17,6 +17,7 @@ foreach ($supporters as $data) {
                     <td>' . $data['total_amount'] . '</td>
                     <td>' . $data['created_at'] . '</td>
                     <td>' . $data['status'] . '</td>
+                    <td>' . $data['created_time'] . '</td>
                 </tr>
                 '; //Data for display on Web page
 }
@@ -33,6 +34,7 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <td>Amount</td>
             <td>Created_at</td>
             <th>Status</th>
+            <th>Created_Time</th>
         </tr>
     </thead>
     <tbody>'.$supporters_data.'</tbody>
@@ -47,6 +49,7 @@ echo '<table id="example" class="table table-striped table-bordered selection-mu
             <td>Amount</td>
             <td>Created_at</td>
             <th>Status</th>
+            <th>Created_Time</th>
         </tr>
     </tfoot>
 </table>';

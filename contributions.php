@@ -4,6 +4,9 @@ require_once('src/config.php');
 require_once('src/functions.php');
 require_once('src/function.find_date.php');
 
+//sets timezone
+date_default_timezone_set("Africa/Nairobi");
+
 $page = 1; //we are starting from the first page
 
 $URL = "https://utcatholic.givecloud.co/admin/api/v2/contributions?page={$page}";
