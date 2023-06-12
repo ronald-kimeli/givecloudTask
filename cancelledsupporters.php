@@ -1,5 +1,5 @@
+#!/usr/bin/php 
 <?php
-#!/usr/bin/php
 
 require_once('src/rest.inc.php');
 require_once('src/config.php');

@@ -1,5 +1,5 @@
-<?php 
-#!/usr/bin/php
+#!/usr/bin/php 
+<?php
 
 require_once('supporters.php');
 require_once('contributions.php');
