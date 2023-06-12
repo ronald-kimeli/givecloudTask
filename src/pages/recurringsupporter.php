@@ -26,8 +26,8 @@ $table_row = '<tr>
                 <th>First_name</th>
                 <th>Last_name</th>
                 <th>Email</th>
-                <td>Phone</td>
-                <td>Created_at</td>
+                <th>Phone</th>
+                <th>Created_at</th>
                 <th>Status</th>
                 <th>Created_Time</th>
               </tr>';

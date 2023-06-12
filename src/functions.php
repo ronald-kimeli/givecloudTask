@@ -2,7 +2,6 @@
 #!/usr/bin/php
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 
 require_once('src/PHPMailer.php');
 require_once('src/SMTP.php');

@@ -17,6 +17,7 @@ foreach ($supporters as $data) {
                     <td>' . $data['total_amount'] . '</td>
                     <td>' . $data['created_at'] . '</td>
                     <td>' . $data['status'] . '</td>
+                    <td>' . $data['recurring_status'] . '</td>
                     <td>' . $data['created_time'] . '</td>
                 </tr>
                 '; //Data for display on Web page
@@ -28,10 +29,11 @@ $table_row = '<tr>
                 <th>First_name</th>
                 <th>Last_name</th>
                 <th>Email</th>
-                <td>Phone</td>
-                <td>Amount</td>
-                <td>Created_at</td>
+                <th>Phone</th>
+                <th>Amount</th>
+                <th>Created_at</th>
                 <th>Status</th>
+                <th>Recurr Status</th>
                 <th>Created_Time</th>
               </tr>';
     
