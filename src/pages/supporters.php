@@ -21,38 +21,26 @@ foreach ($supporters as $data) {
                 </tr>
                 '; //Data for display on Web page
 }
+
+$table_row = '<tr>
+                <th>#</th>
+                <th>Supporter_id</th>
+                <th>First_name</th>
+                <th>Last_name</th>
+                <th>Email</th>
+                <td>Phone</td>
+                <td>Amount</td>
+                <td>Created_at</td>
+                <th>Status</th>
+                <th>Created_Time</th>
+              </tr>';
     
 echo '<table id="example" class="table table-striped table-bordered selection-multiple-rows">
     <thead>
-        <tr>
-            <th>#</th>
-            <th>Supporter_id</th>
-            <th>First_name</th>
-            <th>Last_name</th>
-            <th>Email</th>
-            <td>Phone</td>
-            <td>Amount</td>
-            <td>Created_at</td>
-            <th>Status</th>
-            <th>Created_Time</th>
-        </tr>
+       ' . $table_row . '
     </thead>
     <tbody>'.$supporters_data.'</tbody>
     <tfoot>
-        <tr>
-            <th>#</th>
-            <th>Supporter_id</th>
-            <th>First_name</th>
-            <th>Last_name</th>
-            <th>Email</th>
-            <td>Phone</td>
-            <td>Amount</td>
-            <td>Created_at</td>
-            <th>Status</th>
-            <th>Created_Time</th>
-        </tr>
+       ' . $table_row . '
     </tfoot>
 </table>';
-
-?>
-

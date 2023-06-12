@@ -1,4 +1,5 @@
 <?php
+#!/usr/bin/php
 
 Class RestCurl {
   public static function exec($method, $url, $Headers, $obj = array()) {

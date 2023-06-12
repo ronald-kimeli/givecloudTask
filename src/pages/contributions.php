@@ -9,7 +9,7 @@ $contributions = mysqli_query($conn, "SELECT * FROM contributions");
 $contributions_data = '';
 foreach ($contributions as $data) {
     $contributions_data .=
-                           '<tr>
+        '<tr>
                                 <td>' . $data['id'] . '</td>
                                 <td>' . $data['email'] . '</td>
                                 <td>' . $data['supporter_id'] . '</td>
@@ -25,41 +25,29 @@ foreach ($contributions as $data) {
                                 <td>' . $data['created_time'] . '</td>
                             </tr>';
 }
-    
+
+$table_row = '<tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>Supporter_id</th>
+                <th>Supporter_deprecated_id</th>
+                <th>Contribution_id</th>
+                <th>Contribution_number</th>
+                <th>Total_amount</th>
+                <th>Is_paid</th>
+                <th>Is_recurring</th>
+                <th>Date_started</th>
+                <th>Recurring_amount</th>
+                <th>Billing_period</th>
+                <th>Created_Time</th>
+              </tr>';
+
 echo '<table id="example" class="table table-striped table-bordered selection-multiple-rows">
     <thead>
-        <tr>
-            <th>#</th>
-            <th>Email</th>
-            <th>Supporter_id</th>
-            <th>Supporter_deprecated_id</th>
-            <th>Contribution_id</th>
-            <th>Contribution_number</th>
-            <th>Total_amount</th>
-            <th>Is_paid</th>
-            <th>Is_recurring</th>
-            <th>Date_started</th>
-            <th>Recurring_amount</th>
-            <th>Billing_period</th>
-            <th>Created_Time</th>
-        </tr>
+    ' . $table_row . '
     </thead>
-    <tbody>'.$contributions_data.'</tbody>
+    <tbody>' . $contributions_data . '</tbody>
     <tfoot>
-        <tr>
-            <th>#</th>
-            <th>Email</th>
-            <th>Supporter_id</th>
-            <th>Supporter_deprecated_id</th>
-            <th>Contribution_id</th>
-            <th>Contribution_number</th>
-            <th>Total_amount</th>
-            <th>Is_paid</th>
-            <th>Is_recurring</th>
-            <th>Date_started</th>
-            <th>Recurring_amount</th>
-            <th>Billing_period</th>
-            <th>Created_Time</th>
-        </tr>
+    ' . $table_row . '
     </tfoot>
 </table>';

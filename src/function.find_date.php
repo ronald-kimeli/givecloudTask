@@ -1,4 +1,6 @@
 <?php
+#!/usr/bin/php
+
 /**
  * Find Date in a String
  *

@@ -7,8 +7,8 @@ $cancelledSupporters = mysqli_query($conn, "SELECT * FROM cancelledSupporters");
 $cancelledSupporters_data = '';
 
 foreach ($cancelledSupporters as $data) {
-  
-$cancelledSupporters_data .= '<tr>
+
+    $cancelledSupporters_data .= '<tr>
                     <td>' . $data['id'] . '</td>
                     <td>' . $data['supporter_id'] . '</td>
                     <td>' . $data['first_name'] . '</td>
@@ -20,33 +20,25 @@ $cancelledSupporters_data .= '<tr>
                     <td>' . $data['created_time'] . '</td>
                 </tr>'; //Data for display on Web page
 }
-    
+
+$table_row = '<tr>
+                <th>#</th>
+                <th>Supporter_id</th>
+                <th>First_name</th>
+                <th>Last_name</th>
+                <th>Email</th>
+                <td>Phone</td>
+                <td>Created_at</td>
+                <th>Status</th>
+                <th>Created_Time</th>
+              </tr>';
+
 echo '<table id="example" class="table table-striped table-bordered selection-multiple-rows">
     <thead>
-        <tr>
-            <th>#</th>
-            <th>Supporter_id</th>
-            <th>First_name</th>
-            <th>Last_name</th>
-            <th>Email</th>
-            <td>Phone</td>
-            <td>Created_at</td>
-            <th>Status</th>
-            <th>Created_Time</th>
-        </tr>
+        ' . $table_row . '
     </thead>
-    <tbody>'.$cancelledSupporters_data.'</tbody>
+    <tbody>' . $cancelledSupporters_data . '</tbody>
     <tfoot>
-        <tr>
-            <th>#</th>
-            <th>Supporter_id</th>
-            <th>First_name</th>
-            <th>Last_name</th>
-            <th>Email</th>
-            <td>Phone</td>
-            <td>Created_at</td>
-            <th>Status</th>
-            <th>Created_Time</th>
-        </tr>
+        ' . $table_row . '
     </tfoot>
 </table>';
