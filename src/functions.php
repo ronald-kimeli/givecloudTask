@@ -1,10 +1,10 @@
-<?php
 #!/usr/bin/php
+<?php
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-require_once('src/PHPMailer.php');
-require_once('src/SMTP.php');
+require_once('PHPMailer.php');
+require_once('SMTP.php');
 
 $mail = new PHPMailer(true);
 

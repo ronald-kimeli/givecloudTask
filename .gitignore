@@ -1,3 +1,5 @@
 /src/config.php
 /vendor
 /composer.lock
+test.php
+updateSupporters.php
