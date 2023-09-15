@@ -111,7 +111,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <div id='apidata' class="table-responsive">
-
+//Main table data is added here dynamically
                                         </div>
                                     </div>
                                 </div>
